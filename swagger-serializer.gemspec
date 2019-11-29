@@ -37,4 +37,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rspec-power_assert", "~> 1.1"
+  spec.add_development_dependency "pry-byebug", "~> 3.7"
 end
