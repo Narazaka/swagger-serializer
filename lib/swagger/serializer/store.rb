@@ -19,7 +19,7 @@ module Swagger
 
       class Injectors
         def [](name)
-          "#{name}Serializer".constantize
+          "#{name}Serializer".safe_constantize
         end
       end
     end
