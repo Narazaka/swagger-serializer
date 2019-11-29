@@ -12,13 +12,10 @@ Gem::Specification.new do |spec|
   spec.summary = "Swagger (OpenAPI 3) schema based Serializer"
   spec.homepage = "https://github.com/Narazaka/swagger-serializer"
 
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata["homepage_uri"] = spec.homepage
-    spec.metadata["source_code_uri"] = "https://github.com/Narazaka/swagger-serializer.git"
-    spec.metadata["changelog_uri"] = "https://github.com/Narazaka/swagger-serializer/blob/master/CHANGELOG.md"
-  end
+  spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata["source_code_uri"] = "https://github.com/Narazaka/swagger-serializer.git"
+  spec.metadata["changelog_uri"] = "https://github.com/Narazaka/swagger-serializer/blob/master/CHANGELOG.md"
+  spec.metadata["documentation_uri"] = "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
