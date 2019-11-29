@@ -1,0 +1,21 @@
+inherit_from:
+  - .rubocop_airbnb.yml
+inherit_gem:
+  rubocop-config-prettier: config/rubocop.yml
+# prettier
+Style/PercentLiteralDelimiters:
+  Description: Use `%`-literal delimiters consistently
+  StyleGuide: https://github.com/rubocop-hq/ruby-style-guide#percent-literal-braces
+  Enabled: false
+  PreferredDelimiters:
+    ! '%': ()
+    ! '%i': ()
+    ! '%q': ()
+    ! '%Q': ()
+    ! '%r': ! '{}'
+    ! '%s': ()
+    ! '%w': ()
+    ! '%W': ()
+    ! '%x': ()
+Airbnb/SimpleModifierConditional:
+  Enabled: false
