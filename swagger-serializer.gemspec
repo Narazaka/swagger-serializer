@@ -7,6 +7,7 @@ Gem::Specification.new do |spec|
   spec.version = Swagger::Serializer::VERSION
   spec.authors = %w[Narazaka]
   spec.email = %w[info@narazaka.net]
+  spec.licenses = %w[Zlib]
 
   spec.summary = "Swagger (OpenAPI 3) schema based Serializer"
   spec.homepage = "https://github.com/Narazaka/swagger-serializer"
