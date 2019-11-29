@@ -7,14 +7,15 @@ module Swagger
         end
       end
 
-      attr_accessor :inject_key
+      attr_accessor :inject_key, :injectors
 
-      def initialize(inject_key = "title")
+      def initialize(inject_key = "title", injectors = Injectors.new)
         @inject_key = inject_key
+        @injectors = injectors
       end
 
       def serializer_options
-        { inject_key: inject_key, injectors: Injectors.new }
+        { inject_key: inject_key, injectors: injectors }
       end
 
       class Injectors
