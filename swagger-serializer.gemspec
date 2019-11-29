@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors = %w[Narazaka]
   spec.email = %w[info@narazaka.net]
 
-  spec.summary = "Swagger schema based Serializer"
+  spec.summary = "Swagger (OpenAPI 3) schema based Serializer"
   spec.homepage = "https://github.com/Narazaka/swagger-serializer"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -17,9 +17,6 @@ Gem::Specification.new do |spec|
     spec.metadata["homepage_uri"] = spec.homepage
     spec.metadata["source_code_uri"] = "https://github.com/Narazaka/swagger-serializer.git"
     spec.metadata["changelog_uri"] = "https://github.com/Narazaka/swagger-serializer/blob/master/CHANGELOG.md"
-  else
-    raise "RubyGems 2.0 or newer is required to protect against " \
-            "public gem pushes."
   end
 
   # Specify which files should be added to the gem when it is released.
