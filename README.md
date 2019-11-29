@@ -124,14 +124,6 @@ class UserSerializer < BaseSerializer
 end
 ```
 
-```ruby
-# app/models/user.rb
-require_dependency "./app/serializers/user_serializer"
-
-class User < ApplicationRecord
-end
-```
-
 Now you can get `{ "id" => 42, "name" => "me!!!!" }`.
 
 This serializer class detection uses the schema's `title` key.

@@ -7,14 +7,6 @@ require "yaml"
 
 module Swagger
   module Serializer
-    def self.included(klass)
-      Store.current << klass
-
-      def klass.inherited(klass)
-        Store.current << klass
-      end
-    end
-
     def initialize(model)
       @model = model
     end

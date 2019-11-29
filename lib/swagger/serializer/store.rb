@@ -7,20 +7,20 @@ module Swagger
         end
       end
 
-      attr_reader :serializers
       attr_accessor :inject_key
 
-      def initialize(serializers = {}, inject_key = "title")
-        @serializers = serializers
+      def initialize(inject_key = "title")
         @inject_key = inject_key
       end
 
       def serializer_options
-        { inject_key: inject_key, injectors: @serializers }
+        { inject_key: inject_key, injectors: Injectors.new }
       end
 
-      def <<(klass)
-        @serializers[klass.name.sub(/Serializer$/, "")] = klass
+      class Injectors
+        def [](name)
+          "#{name}Serializer".constantize
+        end
       end
     end
   end
