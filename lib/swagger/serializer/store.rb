@@ -7,18 +7,12 @@ module Swagger
         end
       end
 
+      attr_reader :options
+
       def initialize(options = nil)
         @options = options || {}
         @options[:inject_key] ||= "title"
         @options[:injectors] ||= Injectors.new(cache: @options[:cache])
-      end
-
-      def [](name)
-        @options[name]
-      end
-
-      def []=(name, value)
-        @options[name] = value
       end
 
       def serializer_options
