@@ -1,5 +1,8 @@
 # Swagger::Serializer
 
+[![Actions Status](https://github.com/Narazaka/swagger-serializer/workflows/Ruby/badge.svg)](https://github.com/Narazaka/swagger-serializer/actions)
+[![Gem Version](https://badge.fury.io/rb/swagger-serializer.svg)](https://badge.fury.io/rb/swagger-serializer)
+
 Swagger (OpenAPI 3) schema based serializer.
 
 ## Installation
