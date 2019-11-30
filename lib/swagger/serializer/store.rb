@@ -7,20 +7,22 @@ module Swagger
         end
       end
 
-      attr_accessor :inject_key, :injectors, :cache
+      def initialize(options = nil)
+        @options = options || {}
+        @options[:inject_key] ||= "title"
+        @options[:injectors] ||= Injectors.new(cache: @options[:cache])
+      end
 
-      def initialize(inject_key: "title", injectors: nil, cache: false)
-        @inject_key = inject_key
-        @injectors = injectors || Injectors.new(cache: cache)
-        @cache = cache
+      def [](name)
+        @options[name]
+      end
+
+      def []=(name, value)
+        @options[name] = value
       end
 
       def serializer_options
-        if cache
-          @serializer_options ||= { inject_key: inject_key, injectors: injectors }
-        else
-          { inject_key: inject_key, injectors: injectors }
-        end
+        @options
       end
 
       class Injectors

@@ -131,7 +131,7 @@ Now you can get `{ "id" => 42, "name" => "me!!!!" }`.
 
 This serializer class detection uses the schema's `title` key.
 If you want to use `Foo::BarSerializer`, set `Foo::Bar` to `title` key.
-The key is configurable by `Swagger::Serializer::Store.current.inject_key = "my_inject_key"`.
+The key is configurable by `Swagger::Serializer::Store.current[:inject_key] = "my_inject_key"`.
 
 Sometimes model needs direct serialize.
 
