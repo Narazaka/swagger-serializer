@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.4.0
+
+- change store interface
+
+## 0.3.0
+
+- change store interface
+
 ## 0.2.0
 
 - implove: injectors
