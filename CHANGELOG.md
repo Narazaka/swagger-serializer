@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.0
+
+- add: params support
+
 ## 0.4.0
 
 - change store interface
