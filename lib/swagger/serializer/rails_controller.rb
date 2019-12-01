@@ -24,7 +24,7 @@ module Swagger::Serializer::RailsController
 
     Rails.application.routes.router.recognize(request) do |route|
       path = route.path.spec.to_s.sub("(.:format)", "").gsub(/:(\w+)/, "{\\1}")
-      @swagger_schema_route_from_request = { path: path, method: request.method.underscore }
+      @swagger_schema_route_from_request = { path: path, method: request.request_method.underscore }
       return @swagger_schema_route_from_request
     end
   end
