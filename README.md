@@ -78,33 +78,13 @@ or use "[swagger-dsl](https://github.com/Narazaka/swagger-dsl)"?
 ```ruby
 # config/initializers/swagger_serializer.rb
 
-# with "swagger-dsl", "json_refs", "hana" gems
-
 if Rails.application.config.eager_load
   Rails.application.config.after_initialize do
-    Swagger::Schema.current = Swagger::Schema.new(JsonRefs.(Swagger::DSL.current))
+    Swagger::Schema.current = Swagger::Schema.new(Swagger::DSL.current.resolved)
   end
 else
   Swagger::Schema.current = Swagger::Schema.new(Swagger::DSL.current)
-
-  def walk(all, part)
-    if part.is_a?(Array)
-      part.map { |item| walk(all, item) }
-    elsif part.is_a?(Hash)
-      ref = part["$ref"] || part[:"$ref"]
-      if ref
-        walk(all, Hana::Pointer.new(ref[1..-1]).eval(all))
-      else
-        part.map { |k, v| [k, walk(all, v)] }.to_h
-      end
-    else
-      part
-    end
-  end
-
-  Swagger::Serializer::Store.current.options[:resolver] = ->(schema) do
-    walk(JsonRefs.(Swagger::DSL.current), schema)
-  end
+  Swagger::Serializer::Store.current.options[:resolver] = Swagger::DSL.current.resolver
 end
 ```
 
