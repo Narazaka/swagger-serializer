@@ -20,6 +20,9 @@ module Swagger
       shortcut :json, "application/json"
       shortcut :xml, "application/xml"
       shortcut :plain, "text/plain"
+      shortcut :html, "text/html"
+      shortcut :csv, "text/csv"
+      shortcut :form, "application/x-www-form-urlencoded"
     end
   end
 end
