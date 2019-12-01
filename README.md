@@ -52,6 +52,10 @@ class ApplicationController < ActionController::Base
   def render_ok(data)
     render_as_schema 200, :json, data
   end
+
+  def render_bad(data)
+    render_as_schema 400, :json, data
+  end
 end
 ```
 
@@ -79,7 +83,32 @@ class UsersController < ApplicationController
   end
 
   def show
-    render_ok User.find(params[:id])
+    render_ok User.find(schema_params[:id])
+  end
+
+  swagger :create do
+    body format: [:form, :json] do
+      user :object do
+        name :string
+      end
+    end
+    
+    render 200 do
+      cref! UserSerializer
+    end
+    render 400 do
+      additionalProperties! do
+        array! { string! }
+      end
+    end
+  end
+  def create
+    @user = User.new(schema_params[:user])
+    if @user.save
+      render_ok @user
+    else
+      render_bad @user.errors
+    end
   end
 end
 ```
