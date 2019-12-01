@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.2
+
+- fix: body params missing error
+
 ## 0.5.1
 
 - fix: request method detection
