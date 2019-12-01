@@ -98,7 +98,7 @@ end
 class UserSerializer < BaseSerializer
   swagger do
     id :integer
-    name :string
+    name :string, optional: true
   end
 
   def name
