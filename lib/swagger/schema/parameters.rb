@@ -61,8 +61,8 @@ module Swagger
         JSON::Schema::Serializer.new(to_json_schema, options)
       end
 
-      def deserializer
-        Deserializer.new(self)
+      def deserializer(options = {})
+        Deserializer.new(self, options)
       end
 
       def validator

@@ -7,7 +7,7 @@ module Swagger
       class Deserializer
         def initialize(parameters, options = {})
           @parameters = parameters
-          @options
+          @options = options
         end
 
         def data(data)
@@ -18,7 +18,11 @@ module Swagger
           def initialize(parameters, data, options)
             @parameters = parameters
             @data = data
-            @options
+            @options = options
+          end
+
+          def deserialize
+            JSON::Schema::Serializer.new(@parameters.to_json_schema, @options).serialize(@data)
           end
 
           def [](name)
