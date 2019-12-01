@@ -67,21 +67,19 @@ class UsersController < ApplicationController
       array! { cref! UserSerializer }
     end
   end
-
   def index
     render_ok User.all
   end
 
   swagger :show do
     params do
-      path :id, schema: :integer, required: true
+      path :id, schema: :integer
     end
 
     render 200 do
       cref! UserSerializer
     end
   end
-
   def show
     render_ok User.find(schema_params[:id])
   end
@@ -104,11 +102,52 @@ class UsersController < ApplicationController
   end
   def create
     @user = User.new(schema_params[:user])
+
     if @user.save
       render_ok @user
     else
       render_bad @user.errors
     end
+  end
+
+  swagger :update do
+    params do
+      path :id, schema: :string
+    end
+
+    body format: [:form, :json] do
+      user :object do
+        name :string
+      end
+    end
+    
+    render 200 do
+      cref! UserSerializer
+    end
+    render 400 do
+      additionalProperties! do
+        array! { string! }
+      end
+    end
+  end
+  def update
+    @user = User.find(schema_params[:id])
+
+    if @user.update(schema_params[:user])
+      render_ok @user
+    else
+      render_bad @user.errors
+    end
+  end
+
+  swagger :destroy do
+    params do
+      path :id, schema: :string
+    end
+  end
+  def destroy
+    @user.destroy!
+    head :no_content
   end
 end
 ```
