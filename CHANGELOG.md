@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.1
+
+- fix: request method detection
+
 ## 0.5.0
 
 - add: params support
