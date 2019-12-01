@@ -29,7 +29,7 @@ Write your OpenAPI spec.
 
 ```yaml
 # swagger.yml
-openapi: "3.0"
+openapi: 3.0.0
 info:
   title: example api
   version: 0.1.0
