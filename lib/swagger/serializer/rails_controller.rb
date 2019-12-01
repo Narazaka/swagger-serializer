@@ -4,9 +4,12 @@ module Swagger::Serializer::RailsController
   # render
 
   def render_as_schema(code, format, data)
+    render format => render_serializer(code, format).serialize(data)
+  end
+
+  def render_serializer(code, format)
     response_obj = swagger_operation.responses[code]
-    serializer = response_obj.content.send(format).serializer(Swagger::Serializer::Store.current.serializer_options)
-    render format => serializer.serialize(data)
+    response_obj.content.send(format).serializer(Swagger::Serializer::Store.current.serializer_options)
   end
 
   def swagger_operation
@@ -29,24 +32,24 @@ module Swagger::Serializer::RailsController
   # params
 
   def parameter_params
-    @parameter_params ||=
-      swagger_operation.parameters.deserializer(Swagger::Serializer::Store.current.serializer_options).data(
-        params.permit!.to_h,
-      )
-        .deserialize
-        .with_indifferent_access
+    @parameter_params ||= parameter_deserializer.data(params.permit!.to_h).deserialize.with_indifferent_access
+  end
+
+  def parameter_deserializer
+    @parameter_deserializer ||=
+      swagger_operation.parameters.deserializer(Swagger::Serializer::Store.current.serializer_options)
   end
 
   def body_params
-    @body_params ||=
+    @body_params ||= body_deserializer ? body_deserializer.deserialize(params.permit!.to_h).with_indifferent_access : {}
+  end
+
+  def body_deserializer
+    @body_deserializer ||=
       if request.content_type
         swagger_operation.request_body.content[request.content_type].deserializer(
           Swagger::Serializer::Store.current.serializer_options,
         )
-          .deserialize(params.permit!.to_h)
-          .with_indifferent_access
-      else
-        {}
       end
   end
 
