@@ -23,7 +23,117 @@ Or install it yourself as:
 
 ## Usage
 
-### Rails
+### Rails with swagger-dsl
+
+use "[swagger-dsl](https://github.com/Narazaka/swagger-dsl)"!
+
+Load it in initializer.
+
+```ruby
+# config/initializers/swagger_serializer.rb
+
+if Rails.application.config.eager_load
+  Rails.application.config.after_initialize do
+    Swagger::Schema.current = Swagger::Schema.new(Swagger::DSL.current.resolved)
+  end
+else
+  Swagger::Schema.current = Swagger::Schema.new(Swagger::DSL.current)
+  Swagger::Serializer::Store.current.options[:resolver] = Swagger::DSL.current.resolver
+end
+```
+
+Use it in controllers.
+
+```ruby
+# app/controllers/application_controller.rb
+class ApplicationController < ActionController::Base
+  include Swagger::Serializer::RailsController
+
+  def render_ok(data)
+    render_as_schema 200, :json, data
+  end
+end
+```
+
+```ruby
+# app/controllers/users_controller.rb
+class UsersController < ApplicationController
+  swagger :index do
+    render 200 do
+      array! { cref! UserSerializer }
+    end
+  end
+
+  def index
+    render_ok User.all
+  end
+
+  swagger :show do
+    params do
+      path :id, schema: :integer, required: true
+    end
+
+    render 200 do
+      cref! UserSerializer
+    end
+  end
+
+  def show
+    render_ok User.find(params[:id])
+  end
+end
+```
+
+Would you want to customize serialization?
+
+```ruby
+# app/serializers/base_serializer.rb
+class BaseSerializer
+  include Swagger::Serializer
+end
+```
+
+```ruby
+# app/serializers/user_serializer.rb
+class UserSerializer < BaseSerializer
+  swagger do
+    id :integer
+    name :string
+  end
+
+  def name
+    "#{@model.name}!!!!"
+  end
+end
+```
+
+Now you can get `{ "id" => 42, "name" => "me!!!!" }`.
+
+This serializer class detection uses the schema's `title` key.
+If you want to use `Foo::BarSerializer`, set `Foo::Bar` to `title` key.
+
+The key is configurable by
+
+```ruby
+# in config/initializers/swagger_serializer.rb
+Swagger::Serializer::Store.current.options[:inject_key] = "my_inject_key"
+Swagger::DSL.current.config.inject_key = "my_inject_key"
+```
+
+Sometimes model needs direct serialize.
+
+```ruby
+# app/models/application_record.rb
+class ApplicationRecord < ActiveRecord::Base
+  self.abstract_class = true
+  
+  include Swagger::Serializer::Model
+end
+```
+
+Now you can get serialized result by `p User.first.serialize`.
+
+### Rails with raw schema
 
 Write your OpenAPI spec.
 
@@ -71,21 +181,6 @@ Load it in initializer.
 Swagger::Schema.load_file_to_current(
   __dir__ + "/../../swagger.yml",
 )
-```
-
-or use "[swagger-dsl](https://github.com/Narazaka/swagger-dsl)"?
-
-```ruby
-# config/initializers/swagger_serializer.rb
-
-if Rails.application.config.eager_load
-  Rails.application.config.after_initialize do
-    Swagger::Schema.current = Swagger::Schema.new(Swagger::DSL.current.resolved)
-  end
-else
-  Swagger::Schema.current = Swagger::Schema.new(Swagger::DSL.current)
-  Swagger::Serializer::Store.current.options[:resolver] = Swagger::DSL.current.resolver
-end
 ```
 
 Use it in controllers.
