@@ -48,6 +48,7 @@ Use it in controllers.
 # app/controllers/application_controller.rb
 class ApplicationController < ActionController::Base
   include Swagger::Serializer::RailsController
+  extend Swagger::DSL::RailsController
 
   def render_ok(data)
     render_as_schema 200, :json, data
@@ -158,6 +159,7 @@ Would you want to customize serialization?
 # app/serializers/base_serializer.rb
 class BaseSerializer
   include Swagger::Serializer
+  extend Swagger::DSL::Serializer
 end
 ```
 
