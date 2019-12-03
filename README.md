@@ -187,7 +187,8 @@ The key is configurable by
 
 ```ruby
 # in config/initializers/swagger_serializer.rb
-Swagger::Serializer::Store.current.options[:inject_key] = "my_inject_key"
+Swagger::Serializer::Store.current.serialize_options[:inject_key] = "my_inject_key"
+Swagger::Serializer::Store.current.deserialize_options[:inject_key] = "my_inject_key"
 Swagger::DSL.current.config.inject_key = "my_inject_key"
 ```
 
@@ -299,10 +300,6 @@ end
 ```
 
 Now you can get `{ "id" => 42, "name" => "me!!!!" }`.
-
-This serializer class detection uses the schema's `title` key.
-If you want to use `Foo::BarSerializer`, set `Foo::Bar` to `title` key.
-The key is configurable by `Swagger::Serializer::Store.current.options[:inject_key] = "my_inject_key"`.
 
 Sometimes model needs direct serialize.
 
