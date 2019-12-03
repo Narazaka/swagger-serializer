@@ -16,9 +16,8 @@ module Swagger
         @serialize_options[:inject_key] ||= "title"
         @deserialize_options[:inject_key] ||= "title"
 
-        injectors = Injectors.new(cache: @options[:cache])
-        @serialize_options[:injectors] ||= injectors
-        @deserialize_options[:injectors] ||= injectors
+        @serialize_options[:injectors] ||= Injectors.new(cache: @serialize_options[:cache])
+        @deserialize_options[:injectors] ||= Injectors.new(cache: @deserialize_options[:cache])
       end
 
       class Injectors
