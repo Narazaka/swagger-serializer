@@ -7,16 +7,18 @@ module Swagger
         end
       end
 
-      attr_reader :options
+      attr_reader :serialize_options, :deserialize_options
 
-      def initialize(options = nil)
-        @options = options || {}
-        @options[:inject_key] ||= "title"
-        @options[:injectors] ||= Injectors.new(cache: @options[:cache])
-      end
+      def initialize(serialize_options: nil, deserialize_options: nil)
+        @serialize_options = serialize_options || {}
+        @deserialize_options = deserialize_options || {}
 
-      def serializer_options
-        @options
+        @serialize_options[:inject_key] ||= "title"
+        @deserialize_options[:inject_key] ||= "title"
+
+        injectors = Injectors.new(cache: @options[:cache])
+        @serialize_options[:injectors] ||= injectors
+        @deserialize_options[:injectors] ||= injectors
       end
 
       class Injectors

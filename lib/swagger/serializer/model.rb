@@ -1,7 +1,7 @@
 module Swagger::Serializer::Model
   def serialize(name = self.class.name)
     serializer =
-      Swagger::Schema.current.component(name).serializer(Swagger::Serializer::Store.current.serializer_options)
+      Swagger::Schema.current.component(name).serializer(Swagger::Serializer::Store.current.serialize_options)
     serializer.serialize(self)
   end
 end
