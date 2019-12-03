@@ -38,7 +38,8 @@ if Rails.application.config.eager_load
   end
 else
   Swagger::Schema.current = Swagger::Schema.new(Swagger::DSL.current)
-  Swagger::Serializer::Store.current.options[:resolver] = Swagger::DSL.current.resolver
+  Swagger::Serializer::Store.current.serialize_options[:resolver] = Swagger::DSL.current.resolver
+  Swagger::Serializer::Store.current.deserialize_options[:resolver] = Swagger::DSL.current.resolver
 end
 ```
 
