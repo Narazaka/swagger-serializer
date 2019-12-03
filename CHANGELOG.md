@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.0
+
+- mod(brake): separate serialize_options and deserialize_options
+
 ## 0.5.2
 
 - fix: body params missing error
