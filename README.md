@@ -33,7 +33,10 @@ Load it in initializer.
 # config/initializers/swagger_serializer.rb
 
 if Rails.application.config.eager_load
+  Swagger::DSL.current.config.lazy_define_paths = true
   Rails.application.config.after_initialize do
+    Rails.application.reload_routes!
+    Swagger::DSL.current.define_paths!
     Swagger::Schema.current = Swagger::Schema.new(Swagger::DSL.current.resolved)
   end
 else
