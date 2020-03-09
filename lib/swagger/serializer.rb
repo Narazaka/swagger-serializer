@@ -24,5 +24,9 @@ module Swagger
     def method_missing(name, *args)
       @model.public_send(name, *args)
     end
+
+    def nil?
+      @model.nil?
+    end
   end
 end
