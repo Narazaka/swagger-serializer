@@ -7,8 +7,9 @@ require "yaml"
 
 module Swagger
   module Serializer
-    def initialize(model)
+    def initialize(model, context = nil)
       @model = model
+      @context = context
     end
 
     def respond_to_missing?(name, include_private)

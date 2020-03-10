@@ -54,12 +54,12 @@ class ApplicationController < ActionController::Base
   include Swagger::Serializer::RailsController
   extend Swagger::DSL::RailsController
 
-  def render_ok(data)
-    render_as_schema 200, :json, data
+  def render_ok(data, context = nil)
+    render_as_schema 200, :json, data, context
   end
 
-  def render_bad(data)
-    render_as_schema 400, :json, data
+  def render_bad(data, context = nil)
+    render_as_schema 400, :json, data, context
   end
 end
 ```
@@ -265,8 +265,8 @@ Use it in controllers.
 class ApplicationController < ActionController::Base
   include Swagger::Serializer::RailsController
 
-  def render_ok(data)
-    render_as_schema 200, :json, data
+  def render_ok(data, context = nil)
+    render_as_schema 200, :json, data, context
   end
 end
 ```
@@ -316,6 +316,43 @@ end
 ```
 
 Now you can get serialized result by `p User.first.serialize`.
+
+### @context
+
+Collection serialization sometimes needs context data for avoiding N+1 access or some other reason.
+
+`render_as_schema`'s 4th parameter is the context that will be passed to serializers `@context`.
+
+```ruby
+# app/serializers/item_serializer.rb
+class ItemSerializer < BaseSerializer
+  swagger do
+    id :integer
+    rate :integer
+  end
+
+  def rate
+    @context[:rates][id]
+  end
+end
+
+# app/controllers/items_controller.rb
+class ItemsController < ApplicationController
+  swagger :index do
+    render 200 do
+      array! do
+        cref! ItemSerializer
+      end
+    end
+  end
+
+  def index
+    items = Item.all
+    rates = ItemRate.calc_item_rates(items)
+    render_ok items, { rates: rates }
+  end
+end
+```
 
 ## Development
 

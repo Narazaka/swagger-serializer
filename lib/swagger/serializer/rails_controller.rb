@@ -3,13 +3,13 @@ module Swagger::Serializer::RailsController
 
   # render
 
-  def render_as_schema(code, format, data)
-    render format => render_serializer(code, format).serialize(data)
+  def render_as_schema(code, format, data, context = nil)
+    render format => render_serializer(code, format, context).serialize(data)
   end
 
-  def render_serializer(code, format)
+  def render_serializer(code, format, context = nil)
     response_obj = swagger_operation.responses[code]
-    response_obj.content.send(format).serializer(Swagger::Serializer::Store.current.serialize_options)
+    response_obj.content.send(format).serializer(Swagger::Serializer::Store.current.serialize_options.merge(inject_context: context))
   end
 
   def swagger_operation
