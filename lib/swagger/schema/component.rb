@@ -9,8 +9,9 @@ module Swagger
         @schema = schema
       end
 
-      def serializer(options = {})
-        JSON::Schema::Serializer.new(@schema, options)
+      def serializer(options = {}, store = true)
+        use_options = store ? Swagger::Serializer::Store.current.serialize_options.merge(options) : options
+        JSON::Schema::Serializer.new(@schema, use_options)
       end
     end
   end
