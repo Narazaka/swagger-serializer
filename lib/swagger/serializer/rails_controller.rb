@@ -9,7 +9,7 @@ module Swagger::Serializer::RailsController
 
   def render_serializer(code, format, context = nil)
     response_obj = swagger_operation.responses[code]
-    response_obj.content.send(format).serializer(Swagger::Serializer::Store.current.serialize_options.merge(inject_context: context))
+    response_obj.content.send(format).serializer(inject_context: context)
   end
 
   def swagger_operation
@@ -37,7 +37,7 @@ module Swagger::Serializer::RailsController
 
   def parameter_deserializer
     @parameter_deserializer ||=
-      swagger_operation.parameters.deserializer(Swagger::Serializer::Store.current.deserialize_options)
+      swagger_operation.parameters.deserializer
   end
 
   def body_params
@@ -47,9 +47,7 @@ module Swagger::Serializer::RailsController
   def body_deserializer
     @body_deserializer ||=
       if request.content_type
-        swagger_operation.request_body.content[request.content_type]&.deserializer(
-          Swagger::Serializer::Store.current.deserialize_options,
-        )
+        swagger_operation.request_body.content[request.content_type]&.deserializer
       end
   end
 
