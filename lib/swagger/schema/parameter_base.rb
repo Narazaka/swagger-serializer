@@ -11,17 +11,17 @@ module Swagger
       end
 
       define_schema_accessor %i[
-                               description
-                               required
-                               deprecated
-                               allowEmptyValue
-                               style
-                               explode
-                               allowReserved
-                               schema
-                               example
-                               examples
-                             ].freeze
+        description
+        required
+        deprecated
+        allowEmptyValue
+        style
+        explode
+        allowReserved
+        schema
+        example
+        examples
+      ].freeze
 
       def to_json_schema
         schema
