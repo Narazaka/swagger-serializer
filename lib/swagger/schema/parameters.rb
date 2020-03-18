@@ -57,12 +57,14 @@ module Swagger
         schema
       end
 
-      def serializer(options = {})
-        JSON::Schema::Serializer.new(to_json_schema, options)
+      def serializer(options = {}, store = true)
+        use_options = store ? Swagger::Serializer::Store.current.serialize_options.merge(options) : options
+        JSON::Schema::Serializer.new(to_json_schema, use_options)
       end
 
-      def deserializer(options = {})
-        Deserializer.new(self, options)
+      def deserializer(options = {}, store = true)
+        use_options = store ? Swagger::Serializer::Store.current.deserialize_options.merge(options) : options
+        Deserializer.new(self, use_options)
       end
 
       def validator

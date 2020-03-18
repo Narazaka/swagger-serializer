@@ -14,12 +14,14 @@ module Swagger
 
       define_schema_accessor :schema, :example, :examples, :encoding
 
-      def serializer(options = {})
-        JSON::Schema::Serializer.new(schema, options)
+      def serializer(options = {}, store = true)
+        use_options = store ? Swagger::Serializer::Store.current.serialize_options.merge(options) : options
+        JSON::Schema::Serializer.new(schema, use_options)
       end
 
-      def deserializer(options = {})
-        Deserializer.new(schema, options)
+      def deserializer(options = {}, store = true)
+        use_options = store ? Swagger::Serializer::Store.current.deserialize_options.merge(options) : options
+        Deserializer.new(schema, use_options)
       end
 
       def validator
