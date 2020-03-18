@@ -37,6 +37,8 @@ module Swagger
     end
 
     def component(name)
+      # HogeSerializer
+      name = name.name.sub(/Serializer$/, "") if name.class == Class
       component = Util.try_hash(components, name)
       Component.new(component) if component
     end
