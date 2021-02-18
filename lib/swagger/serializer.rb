@@ -22,8 +22,8 @@ module Swagger
       end
     end
 
-    def method_missing(name, *args)
-      @model.public_send(name, *args)
+    def method_missing(name, *args, &block)
+      @model.public_send(name, *args, &block)
     end
 
     def nil?
