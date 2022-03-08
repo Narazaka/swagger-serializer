@@ -10,7 +10,7 @@ module Swagger
 
       def [](name)
         # HogeSerializer
-        name = name.name.sub(/Serializer$/, "") if name.class == Class
+        name = name.name.sub(/Serializer$/, "").gsub(/::/, '-') if name.class == Class
         component = Util.try_hash(@schema, name)
         Component.new(component) if component
       end

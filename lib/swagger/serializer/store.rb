@@ -27,10 +27,11 @@ module Swagger
         end
 
         def [](name)
+          serializer_name = name.to_s.gsub(/-/, '::').sub(/(?:Serializer)?$/, "Serializer")
           if @cache
-            @injectors[name] ||= "#{name}Serializer".safe_constantize
+            @injectors[name] ||= serializer_name.safe_constantize
           else
-            "#{name}Serializer".safe_constantize
+            serializer_name.safe_constantize
           end
         end
       end
