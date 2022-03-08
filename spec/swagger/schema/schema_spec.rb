@@ -1,5 +1,5 @@
 RSpec.describe Swagger::Schema do
-  let(:schema) { { components: { FooSpec: { type: :string } } } }
+  let(:schema) { { components: { schemas: { FooSpec: { type: :string } } } } }
 
   let(:instance) { described_class.new(schema) }
 
@@ -10,12 +10,12 @@ RSpec.describe Swagger::Schema do
   end
 
   describe "#component" do
-    subject { instance.component(name) }
+    subject { instance.components.schemas[name] }
 
     context "string" do
       let(:name) { "FooSpec" }
 
-      it_is_asserted_by { subject.schema == instance.components[:FooSpec] }
+      it_is_asserted_by { subject.schema == instance.components.schemas[:FooSpec].schema }
     end
 
     context "class" do
@@ -23,7 +23,7 @@ RSpec.describe Swagger::Schema do
 
       let(:name) { FooSpecSerializer }
 
-      it_is_asserted_by { subject.schema == instance.components[:FooSpec] }
+      it_is_asserted_by { subject.schema == instance.components.schemas[:FooSpec].schema }
     end
   end
 end

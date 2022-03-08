@@ -1,4 +1,4 @@
-require_relative "./schema/component"
+require_relative "./schema/components"
 require_relative "./schema/path_item"
 require_relative "./schema/server"
 require_relative "./schema/schema_accessor"
@@ -29,18 +29,16 @@ module Swagger
       @schema = schema
     end
 
-    define_schema_accessor :paths, :components
+    define_schema_accessor :paths
 
     def path(path)
       path_item = Util.try_hash(paths, path)
       PathItem.new(path_item) if path_item
     end
 
-    def component(name)
-      # HogeSerializer
-      name = name.name.sub(/Serializer$/, "") if name.class == Class
-      component = Util.try_hash(components, name)
-      Component.new(component) if component
+    def components
+      components = Util.try_hash(@schema, 'components')
+      Components.new(components) if components
     end
   end
 end
