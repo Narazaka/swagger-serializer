@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 0.9.0
+
+- mod(brake): adjust to OAS3 spec
+
+## 0.8.3
+
+- add: class component
+
+## 0.7.0
+
+- add: context
+
 ## 0.6.0
 
 - mod(brake): separate serialize_options and deserialize_options

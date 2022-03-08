@@ -184,7 +184,7 @@ end
 Now you can get `{ "id" => 42, "name" => "me!!!!" }`.
 
 This serializer class detection uses the schema's `title` key.
-If you want to use `Foo::BarSerializer`, set `Foo::Bar` to `title` key.
+If you want to use `Foo::BarSerializer`, set `Foo-Bar` to `title` key.
 
 The key is configurable by
 
@@ -219,15 +219,16 @@ info:
   title: example api
   version: 0.1.0
 components:
-  User: &User
-    title: User
-    type: object
-    properties:
-      id:
-        type: integer
-      name:
-        type: string
-    required: [id]
+  schemas:
+    User: &User
+      title: User
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      required: [id]
 paths:
   /users:
     get:
