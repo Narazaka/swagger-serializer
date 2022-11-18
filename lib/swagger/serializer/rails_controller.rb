@@ -46,8 +46,8 @@ module Swagger::Serializer::RailsController
 
   def body_deserializer
     @body_deserializer ||=
-      if request.content_type
-        swagger_operation.request_body.content[request.content_type]&.deserializer
+      if request.media_type
+        swagger_operation.request_body.content[request.media_type]&.deserializer
       end
   end
 

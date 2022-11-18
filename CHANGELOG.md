@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+- Replace `request.content_type` with `request.media_type` for compatibility with the default behavior of Rails 7.0
+
 ## 0.9.0
 
 - mod(brake): adjust to OAS3 spec
