@@ -1,8 +1,8 @@
 # CHANGELOG
 
-## Unreleased
+## 0.9.1
 
-- Replace `request.content_type` with `request.media_type` for compatibility with the default behavior of Rails 7.0
+- Replace `request.content_type` with `request.media_type` for compatibility with the default behavior of Rails 7.0 (@r7kamura)
 
 ## 0.9.0
 
